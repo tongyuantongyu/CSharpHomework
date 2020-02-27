@@ -1,4 +1,4 @@
-﻿namespace Project2
+﻿namespace GUICalc
 {
     partial class Form1
     {

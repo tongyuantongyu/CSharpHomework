@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForm", "WinForm.csproj", "{1668F752-8C99-4A20-8AEE-945109FBA856}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUICalc", "GUICalc\GUICalc.csproj", "{1668F752-8C99-4A20-8AEE-945109FBA856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "..\Console\Console.csproj", "{BE7E7176-7664-4446-A064-F402475AD90C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleCalc", "ConsoleCalc\ConsoleCalc.csproj", "{BE7E7176-7664-4446-A064-F402475AD90C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CalculateTools", "CalculateTools\CalculateTools.shproj", "{ED9B2184-BCF5-453A-B3CA-8C5529AA6092}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CalculateTools\CalculateTools.projitems*{1668f752-8c99-4a20-8aee-945109fba856}*SharedItemsImports = 4
+		CalculateTools\CalculateTools.projitems*{ed9b2184-bcf5-453a-b3ca-8c5529aa6092}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
