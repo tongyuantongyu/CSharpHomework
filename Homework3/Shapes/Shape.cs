@@ -75,7 +75,7 @@ namespace Shapes
             if (a > 0 && b > 0 && c > 0 && a + b > c && b + c > a && a + c > b)
             {
                 Width = a;
-                Height = Math.Sqrt(b * b - (a * a + b * b - c * c) / (4 * a * a));
+                Height = Math.Sqrt(b * b - (a * a + b * b - c * c) * (a * a + b * b - c * c) / (4 * a * a));
             }
             else
             {
