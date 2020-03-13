@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Threading;
 
+/* ! WARNING !
+ * This ticker is only for experiment purpose, and should in *NO* case be used in any real application.
+ * Use a Thread to count time is expensive, buggy and inaccurate.
+ * System.Timers.Timer has same functionality with better design. 
+ */
+
 namespace Ticker
 {
     internal class Ticker
