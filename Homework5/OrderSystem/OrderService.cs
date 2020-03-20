@@ -23,7 +23,7 @@ namespace OrderSystem {
 
       foreach (var term in query.Split(',').AsEnumerable().Select(x => x.Split(':'))) {
         if (term[0] == "*" && term.Length == 1) {
-          return e;
+          continue;
         }
         if (term.Length != 2) {
           throw new InvalidOperationException("Bad query term.");
@@ -120,10 +120,10 @@ namespace OrderSystem {
       return tmp;
     }
 
-    public IEnumerable<Order> Sorted(Comparison<Order> f) {
-      var tmp = orders.ToList();
-      tmp.Sort(f);
-      return tmp;
-    }
+    // public IEnumerable<Order> Sorted(Comparison<Order> f) {
+    //   var tmp = orders.ToList();
+    //   tmp.Sort(f);
+    //   return tmp;
+    // }
   }
 }

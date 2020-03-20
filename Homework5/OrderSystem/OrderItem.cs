@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime;
 using System.IO;
+using System.Security.Policy;
 
 namespace OrderSystem {
   public class OrderItem {
@@ -80,7 +82,7 @@ namespace OrderSystem {
     }
 
     public override int GetHashCode() {
-      return ToString().GetHashCode();
+      return (Name, Price).GetHashCode();
     }
 
     public static OrderItem operator +(OrderItem a, OrderItem b) {

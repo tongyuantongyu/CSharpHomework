@@ -8,8 +8,10 @@ namespace OrderSystem {
       Console.WriteLine("Enter order editor.");
 
       while (true) {
+        Console.Write("O>> ");
+        Console.Out.Flush();
         var op = Console.ReadLine();
-        if (op.Length == 0) {
+        if (string.IsNullOrEmpty(op)) {
           continue;
         }
 
@@ -61,6 +63,8 @@ namespace OrderSystem {
       Console.WriteLine("Order Administration System.");
 
       while (true) {
+        Console.Write("S>> ");
+        Console.Out.Flush();
         var op = Console.ReadLine();
         if (op.Length == 0) {
           continue;
