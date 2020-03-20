@@ -6,6 +6,7 @@ namespace OrderSystem {
   internal static class Terminal {
     private static void editOrder(ref Order order) {
       Console.WriteLine("Enter order editor.");
+
       while (true) {
         var op = Console.ReadLine();
         if (op.Length == 0) {
@@ -13,6 +14,7 @@ namespace OrderSystem {
         }
 
         switch (op[0]) {
+          // create
           case 'c':
             if (op.Length < 3) {
               Console.WriteLine("Missing order item initializer.");
@@ -28,6 +30,7 @@ namespace OrderSystem {
             }
 
             break;
+          // delete
           case 'd':
             if (op.Length < 3) {
               Console.WriteLine("Missing item selector.");
@@ -38,7 +41,8 @@ namespace OrderSystem {
             }
 
             break;
-          case 'l':
+          // list all
+          case 'a':
             Console.Write(order.Table());
             break;
           case 'q':
@@ -66,14 +70,18 @@ namespace OrderSystem {
           // list
           case 'l':
             if (current.Count == 0) {
-              Console.WriteLine("All orders:");
-              service.ForEach(x => Console.Write(x.Table()));
+              Console.WriteLine("No selected order.");
             }
             else {
               Console.WriteLine("Selected orders:");
               current.ForEach(x => Console.Write(x.Table()));
             }
 
+            break;
+          // list all
+          case 'a':
+            Console.WriteLine("All orders:");
+            service.ForEach(x => Console.Write(x.Table()));
             break;
           //create
           case 'c':
