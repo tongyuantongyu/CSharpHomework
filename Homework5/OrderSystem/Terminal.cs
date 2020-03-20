@@ -50,6 +50,14 @@ namespace OrderSystem {
           case 'q':
             Console.WriteLine("Exit order editor.");
             return;
+          case 'h':
+          case '?':
+            Console.WriteLine("Usage:");
+            Console.WriteLine(" c item price amount : Create order item with name <item>, price <price>, amount <amount>");
+            Console.WriteLine(" d item              : Delete order item with name start with <item>");
+            Console.WriteLine(" a                   : show All info of current order");
+            Console.WriteLine(" q                   : Quit");
+            break;
           default:
             Console.WriteLine("Bad operation.");
             break;
@@ -146,6 +154,16 @@ namespace OrderSystem {
             service.Delete(current);
             Console.WriteLine("Related order deleted.");
             current.Clear();
+            break;
+          case 'h':
+          case '?':
+            Console.WriteLine("Usage:");
+            Console.WriteLine(" c customer          : Create order with customer <customer>");
+            Console.WriteLine(" r cond[,cond...]    : Read orders satisfies <cond(s)> and select them");
+            Console.WriteLine(" d                   : Delete selected orders");
+            Console.WriteLine(" u id                : Update order with ID start with <id>");
+            Console.WriteLine(" l                   : List selected orders");
+            Console.WriteLine(" a                   : list All orders");
             break;
           default:
             Console.WriteLine("Bad operation.");
