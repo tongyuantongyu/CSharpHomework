@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // ReSharper disable once CheckNamespace
@@ -97,13 +97,35 @@ namespace OrderSystem.Tests {
     [TestMethod]
     public void SortedTest() {
       var s = TwoOrderOrderService(out var o, out var firstId);
-      Assert.AreEqual(firstId, s.Sorted().First().Id);
-      Assert.AreEqual(o.Id, s.Sorted().ToList()[1].Id);
+      var sorted = s.Sorted().ToList();
+      var sortedCostumer = s.Sorted(or=>or.Customer).ToList();
+      if (string.Compare(o.Id, firstId, StringComparison.Ordinal) >= 0) {
+        Assert.AreEqual(firstId, sorted[0].Id);
+        Assert.AreEqual(o.Id, sorted[1].Id);
+      }
+      else {
+        Assert.AreEqual(firstId, sorted[1].Id);
+        Assert.AreEqual(o.Id, sorted[0].Id);
+      }
+      Assert.AreEqual(firstId, sortedCostumer[0].Id);
+      Assert.AreEqual(o.Id, sortedCostumer[1].Id);
     }
 
-    // [TestMethod]
-    // public void ExportTest() {
-    //   Assert.Fail();
-    // }
+    [TestMethod]
+    public void ImportExportTest() {
+      var s = OneOrderOrderService(out var o);
+      s.Export($"{Path.GetTempPath()}__order_service_import_export_test_file.xml");
+      s.Delete(s.Query("*"));
+      s.Import($"{Path.GetTempPath()}__order_service_import_export_test_file.xml");
+      Assert.AreEqual(o.Id, s.Orders[0].Id);
+    }
+
+    [TestCleanup]
+    public void RemoveTempFile() {
+      try {
+        File.Delete($"{Path.GetTempPath()}__order_service_import_export_test_file.xml");
+      }
+      catch (FileNotFoundException) { }
+    }
   }
 }

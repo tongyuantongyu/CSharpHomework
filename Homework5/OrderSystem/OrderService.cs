@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace OrderSystem {
   public class OrderService {
-    private static readonly XmlSerializer Exporter = new XmlSerializer(typeof(List<Order>));
+    private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(List<Order>));
     public List<Order> Orders { get; private set; } = new List<Order>();
 
     public void Add(Order order) {
@@ -111,14 +111,12 @@ namespace OrderSystem {
     }
 
     public IEnumerable<Order> Sorted() {
-      var tmp = Orders.ToList();
-      tmp.Sort();
+      var tmp = Orders.OrderBy(o => o.Id);
       return tmp;
     }
 
-    public IEnumerable<Order> Sorted(IComparer<Order> ic) {
-      var tmp = Orders.ToList();
-      tmp.Sort(ic);
+    public IEnumerable<Order> Sorted<T>(Func<Order, T> keySelector) {
+      var tmp = Orders.OrderBy(keySelector);
       return tmp;
     }
 
@@ -130,8 +128,17 @@ namespace OrderSystem {
 
     public void Export(string filename) {
       using (var w = new StreamWriter(filename)) {
-        Exporter.Serialize(w, Orders);
+        Serializer.Serialize(w, Orders);
       }
+    }
+
+    public void Import(string filename) {
+      List<Order> orderTemp;
+      using (var r = new StreamReader(filename)) {
+        orderTemp = Serializer.Deserialize(r) as List<Order>;
+      }
+
+      orderTemp?.ForEach(Add);
     }
   }
 }
