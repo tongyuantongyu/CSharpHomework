@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace OrderSystem {
-  internal class OrderService {
-    private List<Order> orders = new List<Order>();
+  public class OrderService {
+    private static readonly XmlSerializer Exporter = new XmlSerializer(typeof(List<Order>));
+    public List<Order> Orders { get; private set; } = new List<Order>();
 
     public void Add(Order order) {
-      if (orders.Exists(x => x.Equals(order))) {
+      if (Orders.Exists(x => x.Equals(order))) {
         throw new InvalidDataException("Order already exist.");
       }
 
-      orders.Add(order);
+      Orders.Add(order);
     }
 
     public IEnumerable<Order> Query(string query) {
-      var e = orders.AsEnumerable();
+      var e = Orders.AsEnumerable();
       if (e == null) {
         return Enumerable.Empty<Order>();
       }
@@ -34,7 +36,7 @@ namespace OrderSystem {
 
         switch (field) {
           case "id":
-            e = e.Where(x => x.ID.StartsWith(condition));
+            e = e.Where(x => x.Id.StartsWith(condition));
             break;
           case "customer":
             e = e.Where(x => x.Customer == condition);
@@ -84,38 +86,38 @@ namespace OrderSystem {
     }
 
     public void Delete(IEnumerable<Order> items) {
-      orders = orders.Except(items).ToList();
+      Orders = Orders.Except(items).ToList();
     }
 
     public void Get(string idPrefix, out Order order, out int index) {
-      index = orders.FindIndex(x => x.ID.StartsWith(idPrefix));
-      order = index != -1 ? orders[index] : null;
+      index = Orders.FindIndex(x => x.Id.StartsWith(idPrefix));
+      order = index != -1 ? Orders[index] : null;
     }
 
     public void Update(Order order, int index) {
-      if (index > orders.Count) {
+      if (index > Orders.Count) {
         throw new IndexOutOfRangeException();
       }
 
-      if (orders[index].ID != order.ID && orders.Exists(x => x.ID == order.ID)) {
+      if (Orders[index].Id != order.Id && Orders.Exists(x => x.Id == order.Id)) {
         throw new InvalidOperationException("Can't duplicate order.");
       }
 
-      orders[index] = order;
+      Orders[index] = order;
     }
 
     public void ForEach(Action<Order> f) {
-      orders.ForEach(f);
+      Orders.ForEach(f);
     }
 
     public IEnumerable<Order> Sorted() {
-      var tmp = orders.ToList();
+      var tmp = Orders.ToList();
       tmp.Sort();
       return tmp;
     }
 
     public IEnumerable<Order> Sorted(IComparer<Order> ic) {
-      var tmp = orders.ToList();
+      var tmp = Orders.ToList();
       tmp.Sort(ic);
       return tmp;
     }
@@ -125,5 +127,11 @@ namespace OrderSystem {
     //   tmp.Sort(f);
     //   return tmp;
     // }
+
+    public void Export(string filename) {
+      using (var w = new StreamWriter(filename)) {
+        Exporter.Serialize(w, Orders);
+      }
+    }
   }
 }

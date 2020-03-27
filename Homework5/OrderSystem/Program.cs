@@ -1,6 +1,6 @@
 ﻿namespace OrderSystem {
-  internal class Program {
-    private static void Main(string[] args) {
+  internal static class Program {
+    private static void Main() {
       Terminal.run();
     }
   }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Policy;
 
 namespace OrderSystem {
+  [Serializable]
   public class OrderItem {
     private double _amount;
 
@@ -31,9 +32,11 @@ namespace OrderSystem {
       Amount = amount;
     }
 
-    public string Name { get; }
+    public OrderItem() {}
 
-    private double Price {
+    public string Name { get; set; }
+
+    public double Price {
       get => _price;
       set {
         if (value > 0) {
@@ -45,7 +48,7 @@ namespace OrderSystem {
       }
     }
 
-    private double Amount {
+    public double Amount {
       get => _amount;
       set {
         if (value > 0) {
@@ -62,13 +65,13 @@ namespace OrderSystem {
     public string TableItem() {
       var name = Name.Length > 20 ? Name.Substring(0, 17) + "..." : Name;
       var price = $"{Price:0.00}";
-      var amount = $"{Amount}";
+      var amount = $"{Amount:0.00}";
       var total = $"{Total:0.00}";
       return $"{name,-20} {price,8} {amount,8} {total,12}";
     }
 
     public override string ToString() {
-      return $"OrderItem<Name={Name},Price={Price},Amount={Amount}>";
+      return $"OrderItem<Name={Name},Price={Price:0.00},Amount={Amount:0.00}>";
     }
 
     public override bool Equals(object obj) {

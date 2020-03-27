@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace OrderSystem {
   internal static class Terminal {
-    private static void editOrder(ref Order order) {
+    private static void EditOrder(ref Order order) {
       Console.WriteLine("Enter order editor.");
 
       while (true) {
@@ -23,7 +23,7 @@ namespace OrderSystem {
             }
             else {
               try {
-                order.AddItem(op.Substring(2));
+                order.AddItem(new OrderItem(op.Substring(2)));
                 Console.WriteLine("Item added.");
               }
               catch (Exception e) {
@@ -74,7 +74,7 @@ namespace OrderSystem {
         Console.Write("S>> ");
         Console.Out.Flush();
         var op = Console.ReadLine();
-        if (op.Length == 0) {
+        if (string.IsNullOrEmpty(op)) {
           continue;
         }
 
@@ -104,7 +104,7 @@ namespace OrderSystem {
               current.Clear();
               var o = new Order(op.Substring(2));
               Console.WriteLine("New order created.");
-              editOrder(ref o);
+              EditOrder(ref o);
               service.Add(o);
             }
 
@@ -137,7 +137,7 @@ namespace OrderSystem {
                 Console.WriteLine("No satisfied order.");
               }
               else {
-                editOrder(ref o);
+                EditOrder(ref o);
                 try {
                   service.Update(o, i);
                   Console.WriteLine("Order updated");
@@ -154,6 +154,9 @@ namespace OrderSystem {
             service.Delete(current);
             Console.WriteLine("Related order deleted.");
             current.Clear();
+            break;
+          case 'e':
+            service.Export(op.Substring(2));
             break;
           case 'h':
           case '?':

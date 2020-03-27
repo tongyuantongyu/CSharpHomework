@@ -2,25 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace OrderSystem {
+  [Serializable]
   public class Order : IComparable<Order> {
     private static int count;
 
-    public readonly string Customer;
-    public readonly string ID;
-    private List<OrderItem> items;
+    public string Customer { get; set; }
+    public string Id { get; set; }
+
+    public List<OrderItem> Items { get; set; }
 
     public Order(string customer) {
       Customer = customer;
-      ID = genID();
-      items = new List<OrderItem>();
+      Id = genID();
+      Items = new List<OrderItem>();
     }
 
-    public double Total => items.ConvertAll(x => x.Total).Sum();
+    public Order() {}
+
+    public double Total => Items.ConvertAll(x => x.Total).Sum();
 
     public int CompareTo(Order other) {
-      return string.Compare(ID, other.ID, StringComparison.Ordinal);
+      return string.Compare(Id, other.Id, StringComparison.Ordinal);
     }
 
     private static string genID() {
@@ -32,50 +37,61 @@ namespace OrderSystem {
       return tmp.ToString();
     }
 
+    [Obsolete("Use AddItem with OrderItem instance instead.")]
     public void AddItem(string initializer) {
       var item = new OrderItem(initializer);
-      var index = items.FindIndex(x => x.Equals(item));
+      var index = Items.FindIndex(x => x.Equals(item));
       if (index == -1) {
-        items.Add(item);
+        Items.Add(item);
       }
       else {
-        items[index] += item;
+        Items[index] += item;
+      }
+    }
+
+    public void AddItem(OrderItem item) {
+      var index = Items.FindIndex(x => x.Equals(item));
+      if (index == -1) {
+        Items.Add(item);
+      }
+      else {
+        Items[index] += item;
       }
     }
 
     public bool HasItem(Predicate<OrderItem> predicate) {
-      return items.Exists(predicate);
+      return Items.Exists(predicate);
     }
 
     public void RemoveItem(string namePrefix) {
-      items = items.Where(x => !x.Name.StartsWith(namePrefix)).ToList();
+      Items = Items.Where(x => !x.Name.StartsWith(namePrefix)).ToList();
     }
 
     public override string ToString() {
-      return $"Order<ID={ID},Customer={Customer}>";
+      return $"Order<ID={Id},Customer={Customer}>";
     }
 
     public override int GetHashCode() {
-      return ID.GetHashCode();
+      return Id.GetHashCode();
     }
 
     public override bool Equals(object obj) {
       if (obj is Order order) {
-        return ID == order.ID;
+        return Id == order.Id;
       }
 
       return base.Equals(obj);
     }
 
     public string Table() {
-      var tmp = new StringBuilder($"Order #{ID} Customer: {Customer}\n");
-      if (items.Count == 0) {
+      var tmp = new StringBuilder($"Order #{Id} Customer: {Customer}\n");
+      if (Items.Count == 0) {
         tmp.Append("Empty Order.");
         return tmp.ToString();
       }
 
       tmp.AppendFormat("{0,-20} {1,8} {2,8} {3,12}\n", "Name", "Price", "Amount", "Total");
-      items.ForEach(x => tmp.AppendLine(x.TableItem()));
+      Items.ForEach(x => tmp.AppendLine(x.TableItem()));
       tmp.AppendLine($"Total Price: {Total:0.00}");
       return tmp.ToString();
     }
