@@ -26,7 +26,18 @@ namespace OrderGUI {
       buttonOK.DialogResult = DialogResult.OK;
     }
 
-    public bool EnableAppend =>
+    private void RefreshBindings() {
+      buttonAppend.ResetBindings();
+      buttonDown.ResetBindings();
+      buttonUp.ResetBindings();
+      buttonRemove.ResetBindings();
+      buttonAppend.DataBindings.Add("Enabled", this, "EnableAppend");
+      buttonDown.DataBindings.Add("Enabled", this, "EnableDown");
+      buttonUp.DataBindings.Add("Enabled", this, "EnableUp");
+      buttonRemove.DataBindings.Add("Enabled", this, "EnableRemove");
+    }
+
+  public bool EnableAppend =>
     radioID.Checked && !string.IsNullOrWhiteSpace(condID.Text) ||
     radioCustomer.Checked && !string.IsNullOrWhiteSpace(condCustomer.Text) ||
     radioTotal.Checked && !string.IsNullOrWhiteSpace(condPrice.Text) ||
@@ -36,7 +47,11 @@ namespace OrderGUI {
 
   public bool EnableDown => queryList.SelectedIndex != querys.Count - 1;
 
-  public bool EnableUp => queryList.SelectedIndex > 1;
+  public bool EnableUp => queryList.SelectedIndex > 0;
+
+  private void RefreshEvent(object _, EventArgs e) {
+    RefreshBindings();
+  }
 
   // private void condID_KeyUp(object sender, KeyEventArgs e) {
   //     if (radioID.Checked) {
@@ -84,10 +99,32 @@ namespace OrderGUI {
           Condition = condItem.Text
         });
       }
+      RefreshBindings();
     }
 
     private void buttonOK_Click(object sender, EventArgs e) {
       Close();
+    }
+
+    private void buttonRemove_Click(object sender, EventArgs e) {
+      querys.RemoveAt(queryList.SelectedIndex);
+      RefreshBindings();
+    }
+
+    private void buttonUp_Click(object sender, EventArgs e) {
+      var temp = querys[queryList.SelectedIndex];
+      querys[queryList.SelectedIndex] = querys[queryList.SelectedIndex - 1];
+      querys[queryList.SelectedIndex - 1] = temp;
+      queryList.SelectedIndex -= 1;
+      RefreshBindings();
+    }
+
+    private void buttonDown_Click(object sender, EventArgs e) {
+      var temp = querys[queryList.SelectedIndex];
+      querys[queryList.SelectedIndex] = querys[queryList.SelectedIndex + 1];
+      querys[queryList.SelectedIndex + 1] = temp;
+      queryList.SelectedIndex += 1;
+      RefreshBindings();
     }
   }
 

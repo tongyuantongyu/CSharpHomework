@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace OrderGUI {
+  [Obsolete("Unused.")]
   public abstract class ChangeDetectableForm : Form {
     protected ChangeDetectableForm(string querySelector) {
       // FormType#FormName.FormTag

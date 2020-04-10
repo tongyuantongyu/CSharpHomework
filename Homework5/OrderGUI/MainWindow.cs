@@ -209,5 +209,28 @@ namespace OrderGUI {
       ActiveControl = operationInput;
       RefreshAllView();
     }
+
+    private void buttonImport_Click(object sender, EventArgs e) {
+      var file = new OpenFileDialog {
+        CheckFileExists = true,
+        Filter = "XML File|*.xml|All Files|*.*",
+        FilterIndex = 0
+      };
+      if (file.ShowDialog() == DialogResult.OK) {
+        service.Import(file.FileName);
+      }
+      RefreshAllView();
+    }
+
+    private void buttonExport_Click(object sender, EventArgs e) {
+      var file = new SaveFileDialog {
+        CheckFileExists = false,
+        Filter = "XML File|*.xml|All Files|*.*",
+        FilterIndex = 0
+      };
+      if (file.ShowDialog() == DialogResult.OK) {
+        service.Export(file.FileName);
+      }
+    }
   }
 }

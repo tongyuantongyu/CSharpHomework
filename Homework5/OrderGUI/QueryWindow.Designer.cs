@@ -104,6 +104,7 @@
       this.buttonRemove.TabIndex = 0;
       this.buttonRemove.Text = "Remove";
       this.buttonRemove.UseVisualStyleBackColor = true;
+      this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
       // 
       // tableLayoutPanel3
       // 
@@ -176,6 +177,7 @@
       this.buttonUp.TabIndex = 0;
       this.buttonUp.Text = "↑";
       this.buttonUp.UseVisualStyleBackColor = true;
+      this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
       // 
       // buttonDown
       // 
@@ -186,6 +188,7 @@
       this.buttonDown.TabIndex = 1;
       this.buttonDown.Text = "↓";
       this.buttonDown.UseVisualStyleBackColor = true;
+      this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
       // 
       // queryListBox
       // 
@@ -207,6 +210,7 @@
       this.queryList.Name = "queryList";
       this.queryList.Size = new System.Drawing.Size(432, 281);
       this.queryList.TabIndex = 0;
+      this.queryList.Click += new System.EventHandler(this.RefreshEvent);
       // 
       // tableLayoutPanel6
       // 
@@ -317,6 +321,7 @@
       this.condID.Name = "condID";
       this.condID.Size = new System.Drawing.Size(275, 29);
       this.condID.TabIndex = 1;
+      this.condID.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RefreshEvent);
       // 
       // condCustomer
       // 
@@ -326,6 +331,7 @@
       this.condCustomer.Name = "condCustomer";
       this.condCustomer.Size = new System.Drawing.Size(275, 29);
       this.condCustomer.TabIndex = 2;
+      this.condCustomer.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RefreshEvent);
       // 
       // condPrice
       // 
@@ -335,6 +341,7 @@
       this.condPrice.Name = "condPrice";
       this.condPrice.Size = new System.Drawing.Size(275, 29);
       this.condPrice.TabIndex = 3;
+      this.condPrice.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RefreshEvent);
       // 
       // condItem
       // 
@@ -344,6 +351,7 @@
       this.condItem.Name = "condItem";
       this.condItem.Size = new System.Drawing.Size(275, 29);
       this.condItem.TabIndex = 4;
+      this.condItem.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RefreshEvent);
       // 
       // tableLayoutPanel8
       // 
