@@ -72,7 +72,10 @@ namespace CrawlerGUI {
         Func<bool> context;
         (context, canceller) = Context();
         var crawler = new Crawler(startURI, false, context);
-        crawler.OnInfoEmitted += info => Invoke((MethodInvoker) delegate { StatusBox.Text += info + "\r\n"; });
+        crawler.OnInfoEmitted += info => Invoke((MethodInvoker) delegate {
+          StatusBox.SelectionStart = StatusBox.Text.Length;
+          StatusBox.SelectedText = info + "\r\n";
+        });
         // crawler.OnInfoEmitted += info => StatusBox.Text += info + '\n';
         void CrawlerStart() => crawler.Start(depth, mode);
         crawlerThread = new Thread(CrawlerStart);
