@@ -37,12 +37,16 @@
       this.LabelDepth = new System.Windows.Forms.Label();
       this.DepthInput = new System.Windows.Forms.TextBox();
       this.StatusBox = new System.Windows.Forms.RichTextBox();
+      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.LabelThread = new System.Windows.Forms.Label();
+      this.ThreadInput = new System.Windows.Forms.TextBox();
       this.MainGrid.SuspendLayout();
       this.AddressPanel.SuspendLayout();
       this.OptionPanel.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
+      this.tableLayoutPanel2.SuspendLayout();
       this.SuspendLayout();
       // 
       // MainGrid
@@ -59,7 +63,7 @@
       this.MainGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
       this.MainGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
       this.MainGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.MainGrid.Size = new System.Drawing.Size(669, 441);
+      this.MainGrid.Size = new System.Drawing.Size(703, 491);
       this.MainGrid.TabIndex = 0;
       // 
       // AddressPanel
@@ -77,7 +81,7 @@
       this.AddressPanel.Name = "AddressPanel";
       this.AddressPanel.RowCount = 1;
       this.AddressPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.AddressPanel.Size = new System.Drawing.Size(669, 50);
+      this.AddressPanel.Size = new System.Drawing.Size(703, 50);
       this.AddressPanel.TabIndex = 0;
       // 
       // InputURL
@@ -86,7 +90,7 @@
       this.InputURL.Location = new System.Drawing.Point(103, 11);
       this.InputURL.Margin = new System.Windows.Forms.Padding(3, 11, 3, 3);
       this.InputURL.Name = "InputURL";
-      this.InputURL.Size = new System.Drawing.Size(463, 29);
+      this.InputURL.Size = new System.Drawing.Size(497, 29);
       this.InputURL.TabIndex = 0;
       this.InputURL.Text = "http://";
       this.InputURL.KeyUp += new System.Windows.Forms.KeyEventHandler(this.InputURL_KeyUp);
@@ -107,7 +111,7 @@
       // 
       this.ButtonStart.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ButtonStart.Enabled = false;
-      this.ButtonStart.Location = new System.Drawing.Point(572, 11);
+      this.ButtonStart.Location = new System.Drawing.Point(606, 11);
       this.ButtonStart.Margin = new System.Windows.Forms.Padding(3, 11, 6, 11);
       this.ButtonStart.Name = "ButtonStart";
       this.ButtonStart.Size = new System.Drawing.Size(91, 28);
@@ -118,19 +122,20 @@
       // 
       // OptionPanel
       // 
-      this.OptionPanel.ColumnCount = 2;
-      this.OptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.OptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.OptionPanel.ColumnCount = 3;
+      this.OptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.OptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.OptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
       this.OptionPanel.Controls.Add(this.panel1, 0, 0);
       this.OptionPanel.Controls.Add(this.tableLayoutPanel1, 1, 0);
+      this.OptionPanel.Controls.Add(this.tableLayoutPanel2, 2, 0);
       this.OptionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.OptionPanel.Location = new System.Drawing.Point(0, 50);
       this.OptionPanel.Margin = new System.Windows.Forms.Padding(0);
       this.OptionPanel.Name = "OptionPanel";
       this.OptionPanel.RowCount = 1;
       this.OptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.OptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-      this.OptionPanel.Size = new System.Drawing.Size(669, 50);
+      this.OptionPanel.Size = new System.Drawing.Size(703, 50);
       this.OptionPanel.TabIndex = 1;
       // 
       // panel1
@@ -140,7 +145,7 @@
       this.panel1.Location = new System.Drawing.Point(6, 3);
       this.panel1.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(325, 44);
+      this.panel1.Size = new System.Drawing.Size(225, 44);
       this.panel1.TabIndex = 0;
       // 
       // tableLayoutPanel3
@@ -157,7 +162,7 @@
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(325, 44);
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(225, 44);
       this.tableLayoutPanel3.TabIndex = 0;
       // 
       // UseBFS
@@ -167,7 +172,7 @@
       this.UseBFS.Dock = System.Windows.Forms.DockStyle.Fill;
       this.UseBFS.Location = new System.Drawing.Point(3, 3);
       this.UseBFS.Name = "UseBFS";
-      this.UseBFS.Size = new System.Drawing.Size(156, 38);
+      this.UseBFS.Size = new System.Drawing.Size(106, 38);
       this.UseBFS.TabIndex = 0;
       this.UseBFS.TabStop = true;
       this.UseBFS.Text = "BFS";
@@ -177,9 +182,9 @@
       // 
       this.UseDFS.AutoSize = true;
       this.UseDFS.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.UseDFS.Location = new System.Drawing.Point(165, 3);
+      this.UseDFS.Location = new System.Drawing.Point(115, 3);
       this.UseDFS.Name = "UseDFS";
-      this.UseDFS.Size = new System.Drawing.Size(157, 38);
+      this.UseDFS.Size = new System.Drawing.Size(107, 38);
       this.UseDFS.TabIndex = 1;
       this.UseDFS.Text = "DFS";
       this.UseDFS.UseVisualStyleBackColor = true;
@@ -192,11 +197,11 @@
       this.tableLayoutPanel1.Controls.Add(this.LabelDepth, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.DepthInput, 1, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(337, 3);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(237, 3);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(329, 44);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(228, 44);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
       // LabelDepth
@@ -217,7 +222,7 @@
       this.DepthInput.Location = new System.Drawing.Point(73, 9);
       this.DepthInput.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
       this.DepthInput.Name = "DepthInput";
-      this.DepthInput.Size = new System.Drawing.Size(253, 29);
+      this.DepthInput.Size = new System.Drawing.Size(144, 29);
       this.DepthInput.TabIndex = 1;
       this.DepthInput.Text = "-1";
       this.DepthInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.DepthInput_KeyUp);
@@ -229,17 +234,55 @@
       this.StatusBox.Location = new System.Drawing.Point(3, 103);
       this.StatusBox.Name = "StatusBox";
       this.StatusBox.ReadOnly = true;
-      this.StatusBox.Size = new System.Drawing.Size(663, 335);
+      this.StatusBox.Size = new System.Drawing.Size(697, 385);
       this.StatusBox.TabIndex = 2;
       this.StatusBox.Text = "";
+      // 
+      // tableLayoutPanel2
+      // 
+      this.tableLayoutPanel2.ColumnCount = 2;
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.Controls.Add(this.LabelThread, 0, 0);
+      this.tableLayoutPanel2.Controls.Add(this.ThreadInput, 1, 0);
+      this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel2.Location = new System.Drawing.Point(471, 3);
+      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+      this.tableLayoutPanel2.RowCount = 1;
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(229, 44);
+      this.tableLayoutPanel2.TabIndex = 2;
+      // 
+      // LabelThread
+      // 
+      this.LabelThread.AutoSize = true;
+      this.LabelThread.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.LabelThread.ForeColor = System.Drawing.Color.Green;
+      this.LabelThread.Location = new System.Drawing.Point(3, 0);
+      this.LabelThread.Name = "LabelThread";
+      this.LabelThread.Size = new System.Drawing.Size(69, 44);
+      this.LabelThread.TabIndex = 0;
+      this.LabelThread.Text = "Thread:";
+      this.LabelThread.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      // 
+      // ThreadInput
+      // 
+      this.ThreadInput.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ThreadInput.Location = new System.Drawing.Point(78, 9);
+      this.ThreadInput.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
+      this.ThreadInput.Name = "ThreadInput";
+      this.ThreadInput.Size = new System.Drawing.Size(148, 29);
+      this.ThreadInput.TabIndex = 1;
+      this.ThreadInput.Text = "1";
+      this.ThreadInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ThreadInput_KeyUp);
       // 
       // CrawlerGUI
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(669, 441);
+      this.ClientSize = new System.Drawing.Size(703, 491);
       this.Controls.Add(this.MainGrid);
-      this.MinimumSize = new System.Drawing.Size(400, 300);
+      this.MinimumSize = new System.Drawing.Size(450, 300);
       this.Name = "CrawlerGUI";
       this.Text = "Crawler";
       this.MainGrid.ResumeLayout(false);
@@ -251,6 +294,8 @@
       this.tableLayoutPanel3.PerformLayout();
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
+      this.tableLayoutPanel2.ResumeLayout(false);
+      this.tableLayoutPanel2.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -271,6 +316,9 @@
         private System.Windows.Forms.Label LabelDepth;
         private System.Windows.Forms.TextBox DepthInput;
         private System.Windows.Forms.RichTextBox StatusBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label LabelThread;
+        private System.Windows.Forms.TextBox ThreadInput;
     }
 }
 
