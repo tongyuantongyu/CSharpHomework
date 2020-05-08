@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -9,7 +11,9 @@ namespace OrderSystem {
   public class Order : IComparable<Order> {
     private static int count;
 
+    [Required]
     public string Customer { get; set; }
+    [Key, Column(Order = 1)]
     public string Id { get; set; }
 
     public List<OrderItem> Items { get; set; }
@@ -22,6 +26,7 @@ namespace OrderSystem {
 
     public Order() {}
 
+    [NotMapped]
     public double Total => Items.ConvertAll(x => x.Total).Sum();
 
     public int CompareTo(Order other) {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime;
 using System.IO;
 using System.Security.Policy;
@@ -9,6 +11,9 @@ namespace OrderSystem {
     private double _amount;
 
     private double _price;
+
+    public Order Order { get; set; }
+    public string OrderId { get; set; }
 
     public OrderItem(string initializer) {
       var parameters = initializer.Split(' ');
@@ -34,8 +39,10 @@ namespace OrderSystem {
 
     public OrderItem() {}
 
+    [Required]
     public string Name { get; set; }
 
+    [Required]
     public double Price {
       get => _price;
       set {
@@ -48,6 +55,7 @@ namespace OrderSystem {
       }
     }
 
+    [Required]
     public double Amount {
       get => _amount;
       set {
@@ -60,6 +68,7 @@ namespace OrderSystem {
       }
     }
 
+    [NotMapped]
     public double Total => Price * Amount;
 
     public string TableItem() {
