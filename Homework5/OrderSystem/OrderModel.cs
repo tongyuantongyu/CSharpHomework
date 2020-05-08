@@ -5,7 +5,7 @@
 
   public class OrderModel : DbContext {
     public OrderModel()
-        : base("OrderDB") {
+        : base("name=OrderDB") {
     }
 
     public DbSet<Order> OrderList { get; set; }

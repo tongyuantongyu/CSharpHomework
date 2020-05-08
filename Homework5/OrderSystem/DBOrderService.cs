@@ -8,16 +8,22 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Xml.Serialization;
 
 namespace OrderSystem {
+  static class Env {
+    public static OrderModel db;
+  }
+
   public class DBOrderService : IDisposable {
     private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(List<Order>));
-    public OrderModel db;
+    public readonly OrderModel db;
 
     public DBOrderService() {
       db = new OrderModel();
+      Env.db = db;
     }
 
     public void Dispose() {
       db.Dispose();
+      Env.db = null;
     }
 
     public void Add(Order order) {
@@ -140,7 +146,8 @@ namespace OrderSystem {
     }
 
     public IEnumerable<OrderItem> GetItem(Order order) {
-      return db.ItemList.Local.ToBindingList().Where(item => item.OrderId == order.Id);
+     order.Items =  db.ItemList.Local.ToBindingList().Where(item => item.OrderId == order.Id).ToList();
+     return order.Items;
     }
 
     public void AddItem(Order order, OrderItem item) {

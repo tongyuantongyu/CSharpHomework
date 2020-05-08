@@ -10,25 +10,27 @@ namespace OrderSystem {
   [Serializable]
   public class Order : IComparable<Order> {
     private static int count;
-    private OrderModel db;
 
     [Required]
     public string Customer { get; set; }
     [Key, Column(Order = 1)]
     public string Id { get; set; }
 
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
     public Order(string customer) {
       Customer = customer;
       Id = genID();
-      Items = new List<OrderItem>();
     }
 
     public Order() {}
 
     [NotMapped]
-    public double Total => Items.ConvertAll(x => x.Total).Sum();
+    public double Total {
+      get {
+        return Items.Select(item => item.Total).Sum();
+      }
+    }
 
     public int CompareTo(Order other) {
       return string.Compare(Id, other.Id, StringComparison.Ordinal);

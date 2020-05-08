@@ -52,6 +52,7 @@ namespace OrderGUI {
     }
 
     private void buttonCommit_Click(object sender, EventArgs e) {
+      srv.db.SaveChanges();
       Close();
     }
 

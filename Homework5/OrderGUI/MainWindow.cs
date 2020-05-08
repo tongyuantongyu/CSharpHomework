@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using OrderSystem;
 using System.Windows.Forms;
@@ -17,7 +18,9 @@ namespace OrderGUI {
       // o.AddItem(new OrderItem("s 1 1"));
       // service.Add(o);
       allView.AutoGenerateColumns = false;
-      allView.DataSource = service.db.OrderList.Local;
+      service.db.ItemList.Load();
+      service.db.OrderList.Load();
+      allView.DataSource = service.db.OrderList.Local.ToBindingList();
       allView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
       var allColID = new DataGridViewTextBoxColumn {
         DisplayIndex = 0,
@@ -82,7 +85,7 @@ namespace OrderGUI {
             statusLabel.Text = "New order created.";
             var editor = new OrderItemWindow(o, service);
             if (editor.ShowDialog() == DialogResult.OK) {
-              service.Add(o);
+              // service.Add(o);
             };
             RefreshAllView();
           }
