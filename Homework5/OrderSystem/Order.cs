@@ -10,6 +10,7 @@ namespace OrderSystem {
   [Serializable]
   public class Order : IComparable<Order> {
     private static int count;
+    private OrderModel db;
 
     [Required]
     public string Customer { get; set; }

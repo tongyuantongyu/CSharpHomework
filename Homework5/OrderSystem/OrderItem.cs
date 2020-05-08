@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using System.Runtime;
 using System.IO;
 using System.Security.Policy;
@@ -104,6 +105,15 @@ namespace OrderSystem {
 
       a.Amount += b.Amount;
       return a;
+    }
+  }
+
+  public class OrderItemMap : EntityTypeConfiguration<OrderItem>
+  {
+    public OrderItemMap()
+    {
+      ToTable("OrderItems");
+      HasKey(item => new {item.Name, item.OrderId});
     }
   }
 }

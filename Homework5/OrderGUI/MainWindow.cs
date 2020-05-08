@@ -8,16 +8,16 @@ using System.Windows.Forms;
 
 namespace OrderGUI {
   public partial class MainWindow : Form {
-    private readonly OrderService service;
+    private readonly DBOrderService service;
     private readonly BindingSource current = new BindingSource();
     public MainWindow() {
       InitializeComponent();
-      service = new OrderService();
-      var o = new Order("cus");
-      o.AddItem(new OrderItem("s 1 1"));
-      service.Add(o);
+      service = new DBOrderService();
+      // var o = new Order("cus");
+      // o.AddItem(new OrderItem("s 1 1"));
+      // service.Add(o);
       allView.AutoGenerateColumns = false;
-      allView.DataSource = service.Orders;
+      allView.DataSource = service.db.OrderList.Local;
       allView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
       var allColID = new DataGridViewTextBoxColumn {
         DisplayIndex = 0,
@@ -80,7 +80,7 @@ namespace OrderGUI {
             current.Clear();
             var o = new Order(op.Substring(2));
             statusLabel.Text = "New order created.";
-            var editor = new OrderItemWindow(o);
+            var editor = new OrderItemWindow(o, service);
             if (editor.ShowDialog() == DialogResult.OK) {
               service.Add(o);
             };
@@ -116,7 +116,7 @@ namespace OrderGUI {
               statusLabel.Text = "No satisfied order.";
             }
             else {
-              var editor = new OrderItemWindow(o);
+              var editor = new OrderItemWindow(o, service);
               editor.ShowDialog();
               // if (editor.ShowDialog() != DialogResult.OK) {
               //   return;
@@ -148,8 +148,8 @@ namespace OrderGUI {
     }
 
     private void RefreshAllView() {
-      allView.DataSource = typeof(List<Order>);
-      allView.DataSource = service.Orders;
+      // allView.DataSource = typeof(List<Order>);
+      // allView.DataSource = service.Orders;
     }
 
     private void allView_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {

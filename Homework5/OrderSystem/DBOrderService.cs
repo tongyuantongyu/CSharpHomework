@@ -1,29 +1,35 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Xml.Serialization;
 
 namespace OrderSystem {
-  public class DBOrderService {
+  public class DBOrderService : IDisposable {
     private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(List<Order>));
-    public List<Order> Orders { get; private set; } = new List<Order>();
-
+    public OrderModel db;
 
     public DBOrderService() {
+      db = new OrderModel();
+    }
 
+    public void Dispose() {
+      db.Dispose();
     }
 
     public void Add(Order order) {
-      if (Orders.Exists(x => x.Equals(order))) {
+      if (db.OrderList.Any(o => o.Id.Equals(order.Id))) {
         throw new InvalidDataException("Order already exist.");
       }
 
-      Orders.Add(order);
+      db.OrderList.Add(order);
     }
 
     public IEnumerable<Order> Query(string query) {
-      var e = Orders.AsEnumerable();
+      IEnumerable<Order> e = db.OrderList;
       if (e == null) {
         return Enumerable.Empty<Order>();
       }
@@ -91,38 +97,72 @@ namespace OrderSystem {
     }
 
     public void Delete(IEnumerable<Order> items) {
-      Orders = Orders.Except(items).ToList();
+      db.OrderList.RemoveRange(items);
     }
 
     public void Get(string idPrefix, out Order order, out int index) {
-      index = Orders.FindIndex(x => x.Id.StartsWith(idPrefix));
-      order = index != -1 ? Orders[index] : null;
+      var tmp = db.OrderList.Local.ToList();
+      index = tmp.FindIndex(x => x.Id.StartsWith(idPrefix));
+      order = index != -1 ? tmp[index] : null;
     }
 
     public void Update(Order order, int index) {
-      if (index > Orders.Count) {
+      if (index > db.OrderList.Local.Count) {
         throw new IndexOutOfRangeException();
       }
 
-      if (Orders[index].Id != order.Id && Orders.Exists(x => x.Id == order.Id)) {
+      if (db.OrderList.Local[index].Id != order.Id && db.OrderList.Any(x => x.Id == order.Id)) {
         throw new InvalidOperationException("Can't duplicate order.");
       }
 
-      Orders[index] = order;
+      db.OrderList.Local[index] = order;
     }
 
     public void ForEach(Action<Order> f) {
-      Orders.ForEach(f);
+      foreach (var order in db.OrderList) {
+        f(order);
+      }
     }
 
     public IEnumerable<Order> Sorted() {
-      var tmp = Orders.OrderBy(o => o.Id);
+      var tmp = db.OrderList.OrderBy(o => o.Id);
       return tmp;
     }
 
     public IEnumerable<Order> Sorted<T>(Func<Order, T> keySelector) {
-      var tmp = Orders.OrderBy(keySelector);
+      var tmp = db.OrderList.OrderBy(keySelector);
       return tmp;
+    }
+
+    private static void AttachOrder(ref Order order, ref OrderItem item) {
+      item.Order = order;
+      item.OrderId = order.Id;
+    }
+
+    public IEnumerable<OrderItem> GetItem(Order order) {
+      return db.ItemList.Local.ToBindingList().Where(item => item.OrderId == order.Id);
+    }
+
+    public void AddItem(Order order, OrderItem item) {
+      AttachOrder(ref order, ref item);
+      var index = order.Items.FindIndex(x => x.Equals(item));
+      if (index == -1) {
+        order.Items.Add(item);
+        db.ItemList.Add(item);
+      }
+      else {
+        db.ItemList.Remove(order.Items[index]);
+        order.Items[index] += item;
+        db.ItemList.Add(order.Items[index]);
+      }
+    }
+
+    public bool HasItem(Order order, Predicate<OrderItem> predicate) {
+      return db.ItemList.Any(item => item.OrderId == order.Id && predicate(item));
+    }
+
+    public void RemoveItem(Order order, string namePrefix) {
+      db.ItemList.RemoveRange(db.ItemList.Where(x => !x.Name.StartsWith(namePrefix)));
     }
 
     // public IEnumerable<Order> Sorted(Comparison<Order> f) {
@@ -133,7 +173,7 @@ namespace OrderSystem {
 
     public void Export(string filename) {
       using (var w = new StreamWriter(filename)) {
-        Serializer.Serialize(w, Orders);
+        Serializer.Serialize(w, db.OrderList);
       }
     }
 

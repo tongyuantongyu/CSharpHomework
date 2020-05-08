@@ -8,14 +8,16 @@ namespace OrderGUI {
   public sealed partial class OrderItemWindow : Form {
     private readonly BindingSource itemsList = new BindingSource();
     private readonly Order order;
-    private OrderItemWindow() {
+    private readonly DBOrderService srv;
+    private OrderItemWindow(DBOrderService srv) {
+      this.srv = srv;
       InitializeComponent();
     }
 
-    public OrderItemWindow(Order o) : this() {
+    public OrderItemWindow(Order o, DBOrderService srv) : this(srv) {
       order = o;
       Text = $"Edit Order: ID={o.Id}, Customer={o.Customer}";
-      itemsList.DataSource = order.Items;
+      itemsList.DataSource = srv.GetItem(o);
       itemsView.AutoGenerateColumns = false;
       itemsView.DataSource = itemsList;
       itemsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -62,7 +64,7 @@ namespace OrderGUI {
           }
           else {
             try {
-              order.AddItem(new OrderItem(op.Substring(2)));
+              srv.AddItem(order, new OrderItem(op.Substring(2)));
               statusLabel.Text = "Item added.";
             }
             catch (Exception exc) {
@@ -77,7 +79,7 @@ namespace OrderGUI {
             statusLabel.Text = "Missing item selector.";
           }
           else {
-            order.RemoveItem(op.Substring(2));
+            srv.RemoveItem(order, op.Substring(2));
             statusLabel.Text = "Related items removed.";
           }
 
@@ -104,7 +106,7 @@ namespace OrderGUI {
       ProcessOperation(op);
 
       operationInput.Text = "";
-      itemsList.DataSource = order.Items.ToList();
+      itemsList.DataSource = srv.GetItem(order);
     }
 
     private void itemsView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
