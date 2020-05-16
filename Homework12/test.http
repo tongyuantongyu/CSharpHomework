@@ -1,0 +1,46 @@
+### Create
+POST https://127.0.0.1:5001/api/order/create
+Content-Type: application/json
+
+{
+  "customer": "test",
+  "items": [
+    {
+      "name": "a1",
+      "price": 1,
+      "amount": 2
+    }
+  ]
+}
+
+### Delete
+DELETE https://127.0.0.1:5001/api/order/delete/__TO_BE_FILLED__
+
+### Update
+POST https://127.0.0.1:5001/api/order/update
+Content-Type: application/json
+
+{
+  "customer": "test",
+  "id": "__TO_BE_FILLED__",
+  "items": [
+    {
+      "name": "a1",
+      "price": 1,
+      "amount": 2
+    },
+    {
+      "name": "a2",
+      "price": 2,
+      "amount": 2
+    },
+    {
+      "name": "a3",
+      "price": 1,
+      "amount": 3
+    }
+  ]
+}
+
+### Find
+GET https://127.0.0.1:5001/api/order/find?query=id:927
